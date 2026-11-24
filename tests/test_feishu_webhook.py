@@ -43,6 +43,23 @@ async def test_send_adds_signature_when_secret_set():
     assert (await channel.send(Message(title="t", text="x"))).ok
 
 
+async def test_card_rejected_falls_back_to_text():
+    payloads = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        payload = httpx.Response(200, content=request.content).json()
+        payloads.append(payload)
+        code = 11246 if payload["msg_type"] == "interactive" else 0
+        return httpx.Response(200, json={"code": code})
+
+    channel = FeishuWebhook("https://example.invalid/hook", transport=_transport(handler))
+    result = await channel.send(Message(title="t", text="x", url="http://h/"))
+
+    assert result.ok
+    assert [p["msg_type"] for p in payloads] == ["interactive", "text"]
+    assert payloads[1]["content"]["text"] == "t\nx\nhttp://h/"
+
+
 async def test_platform_rejection_raises():
     channel = FeishuWebhook(
         "https://example.invalid/hook",

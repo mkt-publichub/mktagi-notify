@@ -10,7 +10,7 @@ from mktagi_notify.errors import ConfigError, NotifyError
 from mktagi_notify.message import Message, Severity
 from mktagi_notify.result import DeliveryResult
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 
 __all__ = [
     "Channel",

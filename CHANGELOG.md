@@ -3,6 +3,18 @@
 格式沿用 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号是 `X.Y.Z` 语义化版本：不兼容的改动升 X，新能力升 Y，修 bug 升 Z。
 
+## [0.0.2] - 2026-11-24
+
+### 变更
+
+- 飞书卡片外观：标题栏按 `severity` 上色（`INFO` 由蓝改灰），字段改两列（灰色字段名 + 值），`url` 改为底部「查看详情」跳转按钮。
+- `FeishuWebhook` 卡片发不出去（请求失败或回执 `code` 非 0）时回退发纯文本，链接写在句末；纯文本也失败才抛错。
+- 仓库迁到 `mkt-publichub/mktagi-notify`，项目链接同步。
+
+### 新增
+
+- `mktagi_notify.render.feishu_card.plain_text`。
+
 ## [0.0.1] - 2026-10-18
 
 ### 新增

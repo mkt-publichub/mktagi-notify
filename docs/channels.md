@@ -3,7 +3,8 @@
 ## 飞书自定义机器人 `FeishuWebhook`
 
 - 凭据：群设置 → 机器人 → 添加自定义机器人，拿到的 webhook 地址。开了「签名校验」再加 secret。
-- 用的是消息卡片 2.0（`interactive`），`severity` 映射到卡片头部颜色：info 蓝、success 绿、warning 橙、danger 红。
+- 用的是消息卡片 2.0（`interactive`），`severity` 映射到标题栏颜色：info 灰、success 绿、warning 橙、danger 红；字段排成两列（灰色字段名 + 值），`url` 是底部「查看详情」按钮。
+- 卡片发不出去（请求失败或回执 code 非 0）时，再发一条纯文本（标题、字段、正文，链接写在句末）；纯文本也失败才抛错。
 - 官方没有 SDK，签名按[官方文档](https://open.feishu.cn/document/client-docs/bot-v3/add-custom-bot)自己实现：`HMAC-SHA256("{timestamp}\n{secret}", 空数据)` 再 Base64，随 `timestamp`、`sign` 字段发送。时间戳偏离当前时间超过 1 小时会被拒（code 19021）。
 - 没有 message_id 回执，`DeliveryResult.message_id` 恒为 `None`。
 
